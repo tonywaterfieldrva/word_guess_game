@@ -5,14 +5,112 @@
   <meta charset="UTF-8">
   <title>Word Guess Game - Virginia Fish</title>
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <script scr="assets/javascript/game.js"></script>
 </head>
 
 <body>
+  <div class="container">
+    <header>
+      Virginia Sporting Fish Names Hangman Game
+    </header>
+       <div class="col-md-4">
+            <div class="col-md-8">
+              <p>Press and letter key to Start</p>
+            </div>
+       </div>
+  </div>
+  <script>
+       var targetWords = ["TROUT", "BLUEFISH", "CROAKER", "FLOUNDER", "COBIA", "PERCH", "TAUTOG", "SPOT", "MACKREL", "STRIPER", "SPADEFISH"];
+       var randomWord = targetWords[Math.floor(Math.random() * targetWords.length)];
+       var unUsedAlpha = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+       var usedAlpha = [];
+       var targetLetter = [];
+       var incorrectGuesses = 0;
+       var wins = 0;
+       var losses = 0;
+       var usedLetters = "";
+       var numMatchLetters = 0;
+ 
+       console.log(randomWord);
+       console.log("--------------");
+       // BUILDING targetLetter ARRAY OF THE randomWord SELECTED WORD
+       for (var i = 0; i < randomWord.length; i++) {
+            var singleLetter = randomWord.substr(i,1);
+            targetLetter.push(singleLetter);
+          //  console.log(targetLetter[i]);
 
-  
-
-
+        }
+        
+     // KEYUP FUNCTION
+     document.onkeyup = function(event) {
+        var userGuess = event.key;
+        var userGuessUpper = userGuess.toUpperCase();
+        var matchedLetter = false;
+        var validLetter = false;
+        var prevUsed = false;
+        var incorrectLimit = 5;
+        console.log(userGuessUpper);
+      
+        // DETERMINE IF CHARACTER IS VALID AND IF BEEN USED PREVIOUSLY
+        // IF UNUSED REMOVE FROM unUsedAlpha array to usedAlpha array 
+        // sets boolean flags of validLetter and prevUsed
+        for (var i = 0; i < usedAlpha.length; i++) {
+            if (userGuessUpper === usedAlpha[i]) {
+                validLetter = true;
+                prevUsed = true;
+            }
+        }
+        if (prevUsed === false) {
+          for (var i = 0; i < unUsedAlpha.length; i++) {
+            if (userGuessUpper === unUsedAlpha[i]) {
+                validLetter = true;
+                prevUsed = false;
+                usedAlpha.push(unUsedAlpha[i]);
+                unUsedAlpha.splice(i,1);
+                console.log("unUsedAlpha Length: " + unUsedAlpha.length);
+                console.log("usedAlpha Length: " + usedAlpha.length);
+            }
+          }
+        }  
+        // DETERMINE IS THE userGuessUppper LETTER IS CORRECT OR INCORRECT
+        // ONLY EXECUTES IF validLetter IS IN unUsedAlpha OR usedAlpha ARRAYS
+        // ONLY EXECUTES IF prevLetter IS FALSE   
+        if (validLetter === true && prevUsed === false) {       
+          for (var i = 0; i < randomWord.length; i++) {
+            if (userGuessUpper === targetLetter[i]) {
+              console.log(userGuessUpper + " is correct in letter position: " + i);
+              matchedLetter = true;
+              numMatchLetters++;
+              console.log("Number of Letters Guessed: " + numMatchLetters);
+            }
+          }  
+          if (matchedLetter === false) {
+              console.log(userGuessUpper + " NOT CORRECT");
+              incorrectGuesses++;
+              console.log("Incorrect Guesses " + incorrectGuesses);
+              if (incorrectGuesses === incorrectLimit) {
+                console.log("SORRY THE " + randomWord + " GOT AWAY....YOU ARE HAVING PROCESSED MEAT OR RABBIT FOOD FOR DINNER");
+                losses++;
+                return "Game Over";                
+              }
+          }
+          else if (numMatchLetters === randomWord.length) {
+              console.log("CONGRATS!!!! USER WINS AND HAS FRESH " + randomWord + " FOR DINNER");
+              wins++;
+              return "Game Over";
+          }  
+        }
+        // KICKOUT MESSAGE IF userGuessUpper HAS BEEN USED OR IS NOT IN usedAlpha or unUsedAlpha ARRAYS      
+        // NO COUNTERS ARE INCREMENTED -- NOT A VALID KEY OR ALREADY USED LETTER
+        if (validLetter === false) {
+          console.log("Not a valid alphabet character");
+        }     
+        else if (prevUsed === true) {
+          console.log(userGuessUpper + " has been previously used");
+        } 
+    }
+  </script>
 </body>
 
 </html>
