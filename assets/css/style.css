@@ -1,5 +1,53 @@
-.col-md-4 {
-    width: 100%;
-}
 
- 
+    
+    h1, h2 {
+      text-align: center;
+    }
+
+    h3 {
+      font-size: 15px;
+      text-align: center;
+    }
+
+    #gameStatsMsg {
+      text-align: center;
+      font-style: italic;
+      color: blue;
+      font-size: 30px;
+    }
+    #hold {
+
+       font-size: 50px;
+       text-align: center;
+       color: blue;
+       font-style: italic;
+       font-weight: bold;
+
+    }
+    #statusMsg {
+       font-size: 25px;
+       text-align: center;
+       color: red;
+
+       
+    }
+    #usedLetters, #usedLettersLabel {
+      font-size: 20px;
+      text-align: center;
+      font-style: italic;
+
+    } 
+
+    #wrongGuess {
+      font-size: 25px;
+      text-align: center;
+    }
+    #imgHold {
+      width: 60%;
+      
+    }
+    img {
+      width: 100%;
+      
+    }
+  
