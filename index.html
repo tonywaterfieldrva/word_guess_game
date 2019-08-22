@@ -20,6 +20,7 @@
 
 <div id="gameStatsMsg"></div>
  <div id="hold"></div>
+ <p id="hint"></p>
  <p id="wrongGuess"></p>
  <p id="statusMsg"></p>
  <p id="usedLettersLabel"></p>
@@ -33,6 +34,7 @@
 
    </div>
    <button onclick="resetWord()">Play Game</button>
+   <button id="getHint" onclick="getHint()">GET HINT</button>
   </div>
 
   <script>
@@ -46,46 +48,46 @@
        var incorrectLimit = 5;
        var wins = 0;
        var losses = 0;
-       var usedLettersMsg = " ";
+       var usedLettersMsg = "";
        var numMatchLetters = 0;
        var guessedWord = [];   
        var matchedLetter = false;
         var validLetter = false;
         var prevUsed = false;
-        var incorrectLimit = 5;
-        
+        var gameOver = false;
+        var FishImagesObject = {};    
+        buildFishImagesObject();
+        buildFishHintsObject();
+        hintButtonHidden();
 
+//        alert(FishImagesObject["MARLIN"]);    
 
         // FUNCTION CLEAR MESSAGES FOR RESET
        function clearMessages() {
-         hold.innerHTML = " ";
-         wrongGuess.innerHTML = " ";
-         usedLettersMsg.innerHTML = " ";
-         usedLettersLabel.innerHTML = " ";
-         changeImage("");
+         hint.textContent = "";
+         hold.textContent = "";
+         wrongGuess.textContent = "";
+         usedLetters.textContent = "";
+         usedLettersLabel.textContent = "";
+         changeImageNull("");
         
        }
         
-      function clear_usedAlpha() {
-        console.log("usedAlpha Len: " + usedAlpha.length);
-        for (x = 0; x < usedAlpha.length; x++) {
-          usedAlpha[x].spice;
-        }
-        console.log("usedAlpha Len After " + usedAlpha.lenght);
-      }
-
-       
+      
        // FUNCTION TO RESET randomWord 
        function resetWord() {
+        gameOver = false;
+        hintButtonHidden();
         clearMessages();
         targetWords = [];
         guessedWord = [];
         targetWords = ["TUNA", "MARLIN", "TILEFISH", "GROUPER", "SEABASS", "WAHOO", "TARPON", "MAHI", "TROUT", "BLUEFISH", "CROAKER", "FLOUNDER", "COBIA", "PERCH", "TAUTOG", "SPOT", "MACKREL", "STRIPER", "SPADEFISH"];
+       // targetWords = ["TUNA", "MARLIN"];
         randomWord = "";
         unUsedAlpha = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
         usedAlpha = [];
         randomWord = targetWords[Math.floor(Math.random() * targetWords.length)];
-        hold.innerHTML = " ";
+        hold.textContent = "";
         guessedWord = [];
         targetLetter = [];
         matchedLetter = false;
@@ -94,119 +96,208 @@
         incorrectLimit = 5;
         numMatchLetters = 0;
         incorrectGuesses = 0;
-        statusMsg.innerHTML = " ";
-       console.log(randomWord);
-       console.log("--------------");
+        statusMsg.textContent = "";
+        console.log(randomWord);
+        console.log("--------------");
+        
        // BUILDING targetLetter ARRAY OF THE randomWord SELECTED WORD
        for (var i = 0; i < randomWord.length; i++) {
+            //console.log(randomWord.length);
             var singleLetter = randomWord.substr(i,1);
+        //    console.log(singleLetter);
+            if (singleLetter === " ") {
+              
+              guessedWord.push("&nbsp");
+              numMatchLetters++;
+            }
+            else {
+              guessedWord.push("_");
+            }
             targetLetter.push(singleLetter);
-            guessedWord.push("_");
-            console.log(targetLetter[i]);
-            console.log(guessedWord[i]);  
-            hold.innerHTML = hold.innerHTML + " " + guessedWord[i];
-            wrongGuess.innerHTML = "No wrong Guesses";
+            
+           // console.log(targetLetter[i]);
+           // console.log(guessedWord[i]);
+           // console.log("numMatchLetters: " + numMatchLetters);  
+            hold.textContent = hold.textContent + " " + guessedWord[i];
+            wrongGuess.textContent = "";
         }
        }
 
+        
+     // BUILDING OBJECT OF IMAGES IN FUNCTION BUT MAKING THE DECLARATION GLOBAL
+       function buildFishImagesObject()  {
+        FishImagesObject = {
+          "TUNA" : "TUNA_pic.jpg",
+          "MARLIN" : "MARLIN_pic.jpg",
+          "TILEFISH" : "TILEFISH_pic.jpg",
+          "GROUPER" : "GROUPER_pic.jpg",
+          "SEABASS" : "SEABASS_pic.jpg",
+          "WAHOO" : "WAHOO_pic.jpg",
+          "TARPON" : "TARPON_pic.jpg",
+          "MAHI" : "MAHI_pic.jpg",
+          "TROUT" : "TROUT_pic.jpg",
+          "BLUEFISH" : "BLUEFISH_pic.jpg",
+          "CROAKER" : "CROAKER_pic.jpg", 
+          "FLOUNDER" : "FLOUNDER_pic.jpg",
+          "COBIA" : "COBIA_pic.jpg",
+          "PERCH" : "PERCH_pic.jpg",
+          "TAUTOG" : "TAUTOG_pic.jpg", 
+          "SPOT" : "SPOT_pic.jpg",
+          "MACKREL" : "MACKREL_pic.jpg",
+          "STRIPER" : "STRIPER_pic.jpg",
+          "SPADEFISH" : "SPADEFISH_pic.jpg"
+          }
+        };
+
+        function buildFishHintsObject()  {
+        FishHintsObject = {
+          "TUNA" : "As seen on TV Show Wicked ....",
+          "MARLIN" : "MARLIN_pic.jpg",
+          "TILEFISH" : "TILEFISH_pic.jpg",
+          "GROUPER" : "GROUPER_pic.jpg",
+          "SEABASS" : "SEABASS_pic.jpg",
+          "WAHOO" : "WAHOO_pic.jpg",
+          "TARPON" : "TARPON_pic.jpg",
+          "MAHI" : "aka: Dolphin, Dorado",
+          "TROUT" : "aka: Weakfish",
+          "BLUEFISH" : "aka: Chopper",
+          "CROAKER" : "Makes a croaking sound", 
+          "FLOUNDER" : "Flat with eyes on same side of head",
+          "COBIA" : "aka: Crab Eater",
+          "PERCH" : "aka: Stiffback",
+          "TAUTOG" : "TAUTOG_pic.jpg", 
+          "SPOT" : "Oval dark marking behind head",
+          "MACKREL" : "MACKREL_pic.jpg",
+          "STRIPER" : "Stripes on the side.  aka: Rockfish",
+          "SPADEFISH" : "SPADEFISH_pic.jpg"
+          }
+        };
 
      // KEYUP FUNCTION
-     document.onkeyup = function(event) {
-        var userGuess = event.key;
-        var userGuessUpper = userGuess.toUpperCase();
-        matchedLetter = false;
-        validLetter = false;
-        prevUsed = false;
-        incorrectLimit = 5;
-        statusMsg.innerHTML = " ";
-        console.log(userGuessUpper);
-    //    statusMsg.innerHTML = "";
+       document.onkeyup = function(event) {
+            if (gameOver === false) {
+               console.log("On Key Up: " + gameOver);
+               var userGuess = event.key;
+               var userGuessUpper = userGuess.toUpperCase();
+               matchedLetter = false;
+               validLetter = false;
+               prevUsed = false;
+               incorrectLimit = 5;
+               statusMsg.textContent = "";
+               console.log(userGuessUpper);
+                     
+              // DETERMINE IF CHARACTER IS VALID AND IF BEEN USED PREVIOUSLY
+              // IF UNUSED REMOVE FROM unUsedAlpha array to usedAlpha array 
+              // sets boolean flags of validLetter and prevUsed
+              for (var i = 0; i < usedAlpha.length; i++) {
+                   if (userGuessUpper === usedAlpha[i]) {
+                       validLetter = true;
+                       prevUsed = true;
+                   }
+              }     
+              if (prevUsed === false) {
+                    for (var i = 0; i < unUsedAlpha.length; i++) {
+                         if (userGuessUpper === unUsedAlpha[i]) {
+                              validLetter = true;
+                              prevUsed = false;
+                              usedAlpha.push(unUsedAlpha[i]);
+                              unUsedAlpha.splice(i,1);
+                          } 
+                    }
+                    // console.log("usedAlpha Len: " + usedAlpha.length);
+                    // console.log("unUsedAlpha Len: " + unUsedAlpha.length);
+                   usedLetters.textContent = "";
+                    for (var z = 0; z < usedAlpha.length; z++) {
+                         usedLettersLabel.textContent = "Used Letters";
+                         usedLetters.textContent = usedLetters.textContent  + " " + usedAlpha[z];
+                     }
+               }    
+              // DETERMINE IS THE userGuessUppper LETTER IS CORRECT OR INCORRECT
+              // ONLY EXECUTES IF validLetter IS IN unUsedAlpha OR usedAlpha ARRAYS
+              // ONLY EXECUTES IF prevLetter IS FALSE   
+              if (validLetter === true && prevUsed === false) {       
+                    for (var i = 0; i < randomWord.length; i++) {
+                       if (userGuessUpper === targetLetter[i]) {
+                          guessedWord[i] = targetLetter[i];
+                          matchedLetter = true;
+                          numMatchLetters++;
+                          hold.textContent = "";
+                             for (var z = 0; z < guessedWord.length; z++) {
+                                 hold.textContent = hold.textContent + " " + guessedWord[z];
+                             }
+                        } 
+                    }  
+                    if (matchedLetter === false) {
+                          incorrectGuesses++;
+                          wrongGuess.innerHTML = "Wrong Guesses: " + incorrectGuesses + " of " + incorrectLimit;
+                             if (incorrectGuesses === incorrectLimit - 1) {
+                                hintButtonVisible();
+                             }
+                             
+                              if (incorrectGuesses === incorrectLimit) {
+                                  statusMsg.textContent = "SORRY THE " + randomWord + " GOT AWAY....YOU ARE HAVING PROCESSED MEAT FOR DINNER";
+                                  losses++;
+                                  usedLetters.textContent = " ";
+                                  usedLettersLabel.textContent = " ";
+                                  changeImage("spam_img.jpg");
+                                  updateGameStatsMsg(wins, losses);
+                                  gameOver = true;
+                              }
+                     } 
+                     else if (numMatchLetters === randomWord.length) {
+                          statusMsg.textContent = "CONGRATS!!!! YOU ARE HAVING FRESH " + randomWord + " FOR DINNER";
+                          usedLetters.textContent = " ";
+                          usedLettersLabel.textContent = " ";
+                          changeImage(FishImagesObject[randomWord]);
+                          
+
+                          wins++;
+                          updateGameStatsMsg(wins, losses)
+                          gameOver = true;
+                     }  
+                    }
+                     // KICKOUT MESSAGE IF userGuessUpper HAS BEEN USED OR IS NOT IN usedAlpha or unUsedAlpha ARRAYS      
+                     // NO COUNTERS ARE INCREMENTED -- NOT A VALID KEY OR ALREADY USED LETTER
+                     if (validLetter === false) {
+                         statusMsg.textContent = userGuessUpper + " is not a valid Alphabet character";
+                     }     
+                     else if (prevUsed === true) {
+                         statusMsg.textContent = userGuessUpper + " has already been guessed";
+                     }
+                } 
+            }
       
-        // DETERMINE IF CHARACTER IS VALID AND IF BEEN USED PREVIOUSLY
-        // IF UNUSED REMOVE FROM unUsedAlpha array to usedAlpha array 
-        // sets boolean flags of validLetter and prevUsed
-        for (var i = 0; i < usedAlpha.length; i++) {
-            if (userGuessUpper === usedAlpha[i]) {
-                validLetter = true;
-                prevUsed = true;
-            }
-        }
-         if (prevUsed === false) {
-          for (var i = 0; i < unUsedAlpha.length; i++) {
-            if (userGuessUpper === unUsedAlpha[i]) {
-                validLetter = true;
-                prevUsed = false;
-                usedAlpha.push(unUsedAlpha[i]);
-                unUsedAlpha.splice(i,1);
-            }
-          }
-          console.log("usedAlpha Len: " + usedAlpha.length);
-          console.log("unUsedAlpha Len: " + unUsedAlpha.length);
-          usedLetters.innerHTML = "";
-          for (var z = 0; z < usedAlpha.length; z++) {
-             usedLettersLabel.innerHTML = "Used Letters";
-             usedLetters.innerHTML = usedLetters.innerHTML  + " " + usedAlpha[z];
-          }
-        }  
-        // DETERMINE IS THE userGuessUppper LETTER IS CORRECT OR INCORRECT
-        // ONLY EXECUTES IF validLetter IS IN unUsedAlpha OR usedAlpha ARRAYS
-        // ONLY EXECUTES IF prevLetter IS FALSE   
-        if (validLetter === true && prevUsed === false) {       
-          for (var i = 0; i < randomWord.length; i++) {
-            if (userGuessUpper === targetLetter[i]) {
-              guessedWord[i] = targetLetter[i];
-              matchedLetter = true;
-              numMatchLetters++;
-              hold.innerHTML = "";
-              for (var z = 0; z < guessedWord.length; z++) {
-                hold.innerHTML = hold.innerHTML + " " + guessedWord[z];
-              }
-            }
-          }  
-          if (matchedLetter === false) {
-              incorrectGuesses++;
-              wrongGuess.innerHTML = "Wrong Guesses: " + incorrectGuesses + " of " + incorrectLimit;
-              if (incorrectGuesses === incorrectLimit) {
-               statusMsg.innerHTML = "SORRY THE " + randomWord + " GOT AWAY....YOU ARE HAVING PROCESSED MEAT FOR DINNER";
-               losses++;
-
-               usedLetters.innerHTML = " ";
-               usedLettersLabel.innerHTML = " ";
-               changeImage("assets/images/spam_img.jpg");
-               updateGameStatsMsg(wins, losses);
-              }
-          }
-          else if (numMatchLetters === randomWord.length) {
-            
-              statusMsg.innerHTML = "CONGRATS!!!! YOU ARE HAVING FRESH " + randomWord + " FOR DINNER";
-              usedLetters.innerHTML = " ";
-              usedLettersLabel.innerHTML = " ";
-              changeImage("assets/images/win_img1.jpg");
-              wins++;
-              updateGameStatsMsg(wins, losses)
-            }  
-        }
-        // KICKOUT MESSAGE IF userGuessUpper HAS BEEN USED OR IS NOT IN usedAlpha or unUsedAlpha ARRAYS      
-        // NO COUNTERS ARE INCREMENTED -- NOT A VALID KEY OR ALREADY USED LETTER
-        if (validLetter === false) {
-            statusMsg.innerHTML = userGuessUpper + " is not a valid Alphabet character";
-        }     
-        else if (prevUsed === true) {
-            statusMsg.innerHTML = userGuessUpper + " has already been guessed";
-        } 
-    }
-
+        
     function updateGameStatsMsg(wins, losses) {
        var statmsg = document.getElementById("gameStatsMsg");
-       statmsg.innerHTML = "WINS: " + wins + "   Loss: " + losses;
+       statmsg.textContent = "WINS: " + wins + "   Loss: " + losses;
     }
 
     function changeImage(imgString) {
         var edit_save = document.getElementById("edit-save");
-        edit_save.src  = imgString;
+        edit_save.src  = "assets/images/" + imgString;
     }
-      
+
+    function changeImageNull() {
+    var edit_save = document.getElementById("edit-save");
+        edit_save.src  = "";
+    }
+
+    function getHint() {
+       var hintmsg = document.getElementById("hint");
+            hintmsg.textContent = FishHintsObject[randomWord];
+    }
+
+    function hintButtonHidden() {
+      document.getElementById("getHint").style.visibility = "hidden";
+    }
+    function hintButtonVisible() {
+      document.getElementById("getHint").style.visibility = "visible";
+    }
+
+
   </script>
+
 </div>
 </body>
 
