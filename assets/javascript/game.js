@@ -1,27 +1,27 @@
 
 // DECLARING GLOBAL VARIBLES, OBJECTS AND ARRAYS 
-var targetWords = [];
-   var randomWord = "";
-   var unUsedAlpha = [];
-   var usedAlpha = [];
-   var targetLetter = [];
-   var incorrectGuesses = 0;
-   var incorrectLimit = 8;
-   var wins = 0;
-   var losses = 0;
-   var usedLettersMsg = "";
-   var numMatchLetters = 0;
-   var guessedWord = [];   
-   var matchedLetter = false;
+
+    var targetWords = [];
+    var randomWord = "";
+    var unUsedAlpha = [];
+    var usedAlpha = [];
+    var targetLetter = [];
+    var incorrectGuesses = 0;
+    var incorrectLimit = 8;
+    var wins = 0;
+    var losses = 0;
+    var usedLettersMsg = "";
+    var numMatchLetters = 0;
+    var guessedWord = [];   
+    var matchedLetter = false;
     var validLetter = false;
     var prevUsed = false;
     var gameOver = false;
     var FishImagesObject = {};    
     buildFishImagesObject();
     buildFishHintsObject();
-   // hintButtonHidden();
-   var initialLoadSound = true;
-
+    var initialLoadSound = true;
+    hintButtonHidden();
 
     // FUNCTION CLEAR MESSAGES FOR RESET
    function clearMessages() {
@@ -42,12 +42,13 @@ var targetWords = [];
        initialLoadSound = false;
     }
     gameOver = false;
-//    hintButtonHidden();
+    chgPlayButtonText();
+    hintButtonHidden();
     clearMessages();
     targetWords = [];
     guessedWord = [];
-    //targetWords = ["RED DRUM", "TUNA", "MARLIN", "TILEFISH", "GROUPER", "BLACK SEABASS", "WAHOO", "TARPON", "MAHI MAHI", "SPECKLED TROUT", "BLUEFISH", "CROAKER", "FLOUNDER", "COBIA", "WHITE PERCH", "TAUTOG", "SPOT", "MACKEREL", "STRIPED BASS", "SPADEFISH"];
-    targetWords = ["MACKEREL", "BLACK SEABASS", "MAHI MAHI", "WHITE PERCH", "RED DRUM"];
+    targetWords = ["RED DRUM", "TUNA", "MARLIN", "TILEFISH", "GROUPER", "BLACK SEABASS", "WAHOO", "TARPON", "MAHI MAHI", "SPECKLED TROUT", "BLUEFISH", "CROAKER", "FLOUNDER", "COBIA", "WHITE PERCH", "TAUTOG", "SPOT", "MACKEREL", "STRIPED BASS", "SPADEFISH"];
+    //targetWords = ["MACKEREL", "BLACK SEABASS", "MAHI MAHI", "WHITE PERCH", "RED DRUM"];
     randomWord = "";
     unUsedAlpha = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
     usedAlpha = [];
@@ -184,7 +185,7 @@ var targetWords = [];
                       incorrectGuesses++;
                       wrongGuess.innerHTML = "Wrong Guesses: " + incorrectGuesses + " of " + incorrectLimit;
                          if (incorrectGuesses === incorrectLimit - 3) {
-                          //  hintButtonVisible();
+                            hintButtonVisible();
                          }
                          
                           if (incorrectGuesses === incorrectLimit) {
@@ -240,12 +241,18 @@ function getHint() {
         hintmsg.textContent = FishHintsObject[randomWord];
 }
 
+function chgPlayButtonText() {
+  var butMsg = document.getElementById("resetWord");
+      butMsg.innerHTML = "Play Again";
+}
+
 function hintButtonHidden() {
     var butHide = document.getElementById("getHint").style.visibility = "hidden";
     
 }
+
 function hintButtonVisible() {
-  document.getElementById("getHint").style.visibility = "visible";
+  var butHide = document.getElementById("getHint").style.visibility = "visible";
 }
 
 
@@ -258,8 +265,3 @@ function playAudio_1() {
   var x = document.getElementById("myAudio_1"); 
   x.play(); 
 }
-
-//function reeldrag() {
-//  var x = document.getElementById("fishsplash");
-//  x.play();
-//}
