@@ -46,8 +46,8 @@ var targetWords = [];
     clearMessages();
     targetWords = [];
     guessedWord = [];
-    targetWords = ["TUNA", "MARLIN", "TILEFISH", "GROUPER", "BLACK SEABASS", "WAHOO", "TARPON", "MAHI MAHI", "SPECKLED TROUT", "BLUEFISH", "CROAKER", "FLOUNDER", "COBIA", "WHITE PERCH", "TAUTOG", "SPOT", "MACKREL", "STRIPED BASS", "SPADEFISH"];
-    //targetWords = ["BLACK SEABASS", "MAHI MAHI", "WHITE PERCH"];
+    //targetWords = ["RED DRUM", "TUNA", "MARLIN", "TILEFISH", "GROUPER", "BLACK SEABASS", "WAHOO", "TARPON", "MAHI MAHI", "SPECKLED TROUT", "BLUEFISH", "CROAKER", "FLOUNDER", "COBIA", "WHITE PERCH", "TAUTOG", "SPOT", "MACKEREL", "STRIPED BASS", "SPADEFISH"];
+    targetWords = ["MACKEREL", "BLACK SEABASS", "MAHI MAHI", "WHITE PERCH", "RED DRUM"];
     randomWord = "";
     unUsedAlpha = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
     usedAlpha = [];
@@ -83,6 +83,7 @@ var targetWords = [];
          // BUILDING OBJECT OF IMAGES IN FUNCTION BUT MAKING THE DECLARATION GLOBAL
    function buildFishImagesObject()  {
     FishImagesObject = {
+      "RED DRUM" : "RED DRUM_pic.jpg",
       "TUNA" : "TUNA_pic.jpg",
       "MARLIN" : "MARLIN_pic.jpg",
       "TILEFISH" : "TILEFISH_pic.jpg",
@@ -99,7 +100,7 @@ var targetWords = [];
       "WHITE PERCH" : "PERCH_pic.jpg",
       "TAUTOG" : "TAUTOG_pic.jpg", 
       "SPOT" : "SPOT_pic.jpg",
-      "MACKREL" : "MACKREL_pic.jpg",
+      "MACKEREL" : "MACKEREL_pic.jpg",
       "STRIPED BASS" : "STRIPER_pic.jpg",
       "SPADEFISH" : "SPADEFISH_pic.jpg"
       }
@@ -107,13 +108,14 @@ var targetWords = [];
 
     function buildFishHintsObject()  {
     FishHintsObject = {
+      "RED DRUM" : "Bronze colors with black spot on tail",
       "TUNA" : "As seen on TV Show Wicked ....",
-      "MARLIN" : "MARLIN_pic.jpg",
-      "TILEFISH" : "TILEFISH_pic.jpg",
-      "GROUPER" : "GROUPER_pic.jpg",
-      "BLACK SEABASS" : "SEABASS_pic.jpg",
-      "WAHOO" : "WAHOO_pic.jpg",
-      "TARPON" : "TARPON_pic.jpg",
+      "MARLIN" : "The Ultimate Big Game Trophy Fish",
+      "TILEFISH" : "Offshore Deepwater Bottom Fish",
+      "GROUPER" : "Popular Menu Item",
+      "BLACK SEABASS" : "Popular Wreck Fishing Target",
+      "WAHOO" : "Toothy and Fast Offshore",
+      "TARPON" : "Shallow Water Silver Mammoth",
       "MAHI MAHI" : "aka: Dolphin, Dorado",
       "SPECKLED TROUT" : "aka: Weakfish",
       "BLUEFISH" : "aka: Chopper",
@@ -121,11 +123,11 @@ var targetWords = [];
       "FLOUNDER" : "Flat with eyes on same side of head",
       "COBIA" : "aka: Crab Eater",
       "WHITE PERCH" : "aka: Stiffback",
-      "TAUTOG" : "TAUTOG_pic.jpg", 
+      "TAUTOG" : "Structure Hugging Fish that hits and runs into rocks", 
       "SPOT" : "Oval dark marking behind head",
-      "MACKREL" : "MACKREL_pic.jpg",
+      "MACKEREL" : "Slim fast fish that only hit fast baits",
       "STRIPED BASS" : "Stripes on the side.  aka: Rockfish",
-      "SPADEFISH" : "SPADEFISH_pic.jpg"
+      "SPADEFISH" : "Black and White vertical stripes"
       }
     };
 
