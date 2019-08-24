@@ -1,11 +1,18 @@
-
+   body {
+     
+     background-size: cover;
+       }
     
-    h1, h2 {
+    h1 {
+      font-size: 70px;
       text-align: center;
+      padding-top: 50px;
+      color: black;
+      font-weight: bolder;
     }
 
     h3 {
-      font-size: 15px;
+      font-size: 30px;
       text-align: center;
     }
 
@@ -14,6 +21,7 @@
       font-style: italic;
       color: blue;
       font-size: 30px;
+      font-weight: bold;
     }
     #hold {
 
@@ -27,26 +35,28 @@
     #hint {
       text-align: center;
       font-style: italic;
-      color: red;
-      font-size: 20px;
+      color: blue;
+      font-size: 30px;
+      font-weight: bold;
     }
     #statusMsg {
-       font-size: 25px;
+       font-size: 30px;
        text-align: center;
-       color: red;
-
+       color: black;
+       font-weight: bold;
        
     }
     #usedLetters, #usedLettersLabel {
-      font-size: 20px;
+      font-size: 30px;
       text-align: center;
       font-style: italic;
-
+      font-weight: bold;
     } 
 
     #wrongGuess {
-      font-size: 25px;
+      font-size: 30px;
       text-align: center;
+      font-weight: bold;
     }
     #imgHold {
       width: 60%;
@@ -57,3 +67,19 @@
       
     }
   
+    button {
+      width: 15%;
+      align-self: center;
+    }
+
+    #resetWord {
+      font-size: 25px;
+      font-weight: bold;
+      box-align: center;
+      
+        }
+    #getHint {
+      font-size: 25px;
+      font-weight: bold;
+      border-style: double;
+    }
